@@ -1,0 +1,903 @@
+:root {
+  --primary-color-light: #6a82fb; /* Lighter blue */
+  --secondary-color-light: #a6c1ff; /* Soft blue */
+  --accent-color-light: #ffafbd; /* Soft pink accent */
+  --text-color-light: #333;
+  --bg-color-light: #f0f4f8; /* Very light blue/gray */
+  --card-bg-light: #ffffff;
+  --shadow-light: 0 4px 15px rgba(0, 0, 0, 0.1);
+  --gradient-light: linear-gradient(135deg, #6a82fb, #a6c1ff);
+  --result-item-bg-light: rgba(106, 130, 251, 0.1); /* Light background for result items */
+  --result-item-border-light: rgba(106, 130, 251, 0.3);
+  --rem-result-bg-light: rgba(166, 193, 255, 0.15); /* Slightly different for REM list */
+  --rem-result-border-light: rgba(166, 193, 255, 0.4);
+  --input-bg-light: #ffffff;
+  --input-border-light: rgba(128, 128, 128, 0.3);
+  --nav-link-color-light: #4a5568; /* Slightly muted text color for nav */
+  --nav-link-hover-light: var(--primary-color-light);
+  --nav-link-active-light: var(--primary-color-light);
+
+  --primary-color-dark: #5a55e2; /* Deep purple */
+  --secondary-color-dark: #3b37a0; /* Darker blue/purple */
+  --accent-color-dark: #fbc2eb; /* Lighter pink accent */
+  --text-color-dark: #e0e0e0;
+  --bg-color-dark: #1a1a2e; /* Dark blue/purple */
+  --card-bg-dark: #2a2a4e; /* Slightly lighter dark */
+  --shadow-dark: 0 4px 15px rgba(0, 0, 0, 0.3);
+  --gradient-dark: linear-gradient(135deg, #5a55e2, #3b37a0);
+  --result-item-bg-dark: rgba(90, 85, 226, 0.15); /* Dark background for result items */
+  --result-item-border-dark: rgba(90, 85, 226, 0.4);
+  --rem-result-bg-dark: rgba(59, 55, 160, 0.2); /* Slightly different for REM list */
+  --rem-result-border-dark: rgba(59, 55, 160, 0.5);
+  --input-bg-dark: #2a2a4e;
+  --input-border-dark: rgba(200, 200, 200, 0.4);
+  --nav-link-color-dark: #cbd5e0; /* Lighter muted text color for nav */
+  --nav-link-hover-dark: var(--accent-color-dark);
+  --nav-link-active-dark: var(--accent-color-dark);
+
+
+  --border-radius: 12px;
+  --transition-speed: 0.3s;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  transition: background-color var(--transition-speed), color var(--transition-speed);
+  line-height: 1.6;
+}
+
+body.light-mode {
+  background-color: var(--bg-color-light);
+  color: var(--text-color-light);
+}
+
+body.dark-mode {
+  background-color: var(--bg-color-dark);
+  color: var(--text-color-dark);
+}
+
+#app {
+  max-width: 900px;
+  margin: 2rem auto;
+  padding: 1rem;
+}
+
+header {
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid rgba(128, 128, 128, 0.3);
+}
+
+.header-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem; /* Space between title/toggle and nav */
+}
+
+header h1 {
+  margin: 0;
+  font-size: 2.5rem;
+  font-weight: 700;
+  background: var(--gradient-light); /* Default gradient */
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-fill-color: transparent;
+}
+
+body.dark-mode header h1 {
+  background: var(--gradient-dark);
+   -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-fill-color: transparent;
+}
+
+
+#theme-toggle {
+  background: none;
+  border: none;
+  font-size: 1.8rem;
+  cursor: pointer;
+  padding: 5px;
+  border-radius: 50%;
+  transition: background-color var(--transition-speed);
+}
+
+#theme-toggle:hover {
+  background-color: rgba(128, 128, 128, 0.2);
+}
+
+/* Navigation Menu Styles */
+nav.main-nav ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  justify-content: center; /* Center nav items */
+  gap: 1.5rem; /* Space between nav items */
+  flex-wrap: wrap; /* Allow wrapping on smaller screens */
+}
+
+nav.main-nav li {
+  display: inline-block;
+}
+
+nav.main-nav a {
+  text-decoration: none;
+  font-size: 1rem;
+  font-weight: 500;
+  padding: 0.5rem 0.2rem; /* Add some padding */
+  position: relative;
+  transition: color var(--transition-speed);
+}
+
+body.light-mode nav.main-nav a {
+  color: var(--nav-link-color-light);
+}
+body.dark-mode nav.main-nav a {
+  color: var(--nav-link-color-dark);
+}
+
+nav.main-nav a::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 2px;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: var(--nav-link-hover-light); /* Default */
+  transition: width 0.3s ease-in-out;
+}
+body.dark-mode nav.main-nav a::after {
+   background-color: var(--nav-link-hover-dark);
+}
+
+
+nav.main-nav a:hover::after,
+nav.main-nav a.active::after {
+  width: 100%; /* Underline expands on hover/active */
+}
+
+nav.main-nav a:hover,
+nav.main-nav a.active {
+   color: var(--nav-link-hover-light); /* Default */
+}
+body.dark-mode nav.main-nav a:hover,
+body.dark-mode nav.main-nav a.active {
+   color: var(--nav-link-hover-dark);
+}
+
+
+main {
+  display: grid;
+  gap: 2rem;
+}
+
+.card {
+  padding: 1.5rem 2rem;
+  border-radius: var(--border-radius);
+  transition: background-color var(--transition-speed), box-shadow var(--transition-speed);
+}
+
+body.light-mode .card {
+  background-color: var(--card-bg-light);
+  box-shadow: var(--shadow-light);
+}
+
+body.dark-mode .card {
+  background-color: var(--card-bg-dark);
+  box-shadow: var(--shadow-dark);
+}
+
+.calculator-section h2 {
+  margin-top: 0;
+  margin-bottom: 1rem;
+  font-size: 1.8rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.calculator-section h2 .icon {
+  font-size: 1.5rem;
+}
+
+.calculator-section p {
+  margin-bottom: 1.5rem;
+  color: inherit; /* Inherit from body */
+  opacity: 0.9;
+}
+
+body.light-mode .calculator-section p {
+   color: var(--text-color-light);
+}
+body.dark-mode .calculator-section p {
+   color: var(--text-color-dark);
+}
+
+
+.tabs {
+  display: flex;
+  margin-bottom: 1.5rem;
+  border-bottom: 1px solid rgba(128, 128, 128, 0.3);
+}
+
+.tab-button {
+  padding: 0.8rem 1.2rem;
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 500;
+  position: relative;
+  transition: color var(--transition-speed), opacity var(--transition-speed);
+  color: inherit; /* Inherit color */
+  opacity: 0.7;
+}
+
+body.light-mode .tab-button { color: var(--text-color-light); }
+body.dark-mode .tab-button { color: var(--text-color-dark); }
+
+
+.tab-button::after {
+  content: '';
+  position: absolute;
+  bottom: -1px; /* Align with border */
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background-color: var(--primary-color-light); /* Default */
+  transform: scaleX(0);
+  transition: transform var(--transition-speed) ease-in-out;
+}
+body.dark-mode .tab-button::after {
+   background-color: var(--primary-color-dark);
+}
+
+
+.tab-button.active {
+  opacity: 1;
+  font-weight: 600;
+}
+
+.tab-button.active::after {
+  transform: scaleX(1);
+}
+
+.calculator-form {
+  display: none; /* Hide forms by default */
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.calculator-form.active-form {
+  display: flex; /* Show active form */
+}
+
+.calculator-form label {
+  font-weight: 500;
+  margin-bottom: -0.8rem; /* Tighter spacing */
+}
+
+/* Description text below inputs */
+.input-description {
+    font-size: 0.85rem;
+    opacity: 0.7;
+    margin-top: -0.8rem; /* Pull closer to the input */
+    display: block; /* Ensure it takes its own line */
+}
+
+/* Styles for Flatpickr input container */
+.time-picker-container {
+    position: relative; /* Needed for potential icon placement */
+}
+
+/* Styles for Flatpickr input itself */
+input.flatpickr-input {
+    width: 100%;
+    padding: 0.7rem 1rem;
+    border: 1px solid var(--input-border-light);
+    border-radius: calc(var(--border-radius) / 1.5);
+    font-size: 1rem;
+    background-color: var(--input-bg-light);
+    color: var(--text-color-light);
+    box-sizing: border-box;
+    transition: background-color var(--transition-speed), border-color var(--transition-speed), color var(--transition-speed);
+    cursor: pointer; /* Indicate it's clickable */
+}
+body.dark-mode input.flatpickr-input {
+    background-color: var(--input-bg-dark);
+    color: var(--text-color-dark);
+    border-color: var(--input-border-dark);
+}
+input.flatpickr-input:focus {
+    outline: none;
+    border-color: var(--primary-color-light);
+    box-shadow: 0 0 0 2px rgba(106, 130, 251, 0.3); /* Focus ring */
+}
+body.dark-mode input.flatpickr-input:focus {
+    border-color: var(--primary-color-dark);
+    box-shadow: 0 0 0 2px rgba(90, 85, 226, 0.4); /* Focus ring */
+}
+/* Add a calendar icon (optional) */
+input.flatpickr-input {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%23888' viewBox='0 0 16 16'%3E%3Cpath d='M11 6.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm-3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm-5 3a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1z'/%3E%3Cpath d='M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    background-size: 1em;
+    padding-right: 3rem; /* Make space for icon */
+}
+body.dark-mode input.flatpickr-input {
+     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%23ccc' viewBox='0 0 16 16'%3E%3Cpath d='M11 6.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm-3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm-5 3a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1z'/%3E%3Cpath d='M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z'/%3E%3C/svg%3E");
+}
+
+
+.calculate-button {
+  padding: 0.8rem 1.5rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: white;
+  border: none;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+  background: var(--gradient-light); /* Default */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  margin-top: 0.5rem; /* Add some space above button */
+}
+body.dark-mode .calculate-button {
+   background: var(--gradient-dark);
+   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+
+.calculate-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+body.dark-mode .calculate-button:hover {
+   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+
+.calculate-button:active {
+  transform: translateY(0);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+body.dark-mode .calculate-button:active {
+   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+}
+
+
+.results {
+  margin-top: 1.5rem;
+  padding: 1rem;
+  border-radius: calc(var(--border-radius) / 1.5);
+  background-color: rgba(128, 128, 128, 0.05);
+  display: none; /* Hidden initially */
+}
+
+.results p:first-of-type { /* Target the paragraph before the list */
+  margin-bottom: 0.8rem;
+  font-weight: 500;
+}
+
+.results ul {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 1rem 0;
+  display: grid; /* Use grid for better alignment */
+  gap: 0.8rem;
+}
+
+/* Specific grid for sleep cycle results */
+#bedtime-options, #wakeup-options {
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); /* Responsive grid */
+}
+
+
+/* Style for individual time result list items */
+.results li.time-result-item {
+  display: flex; /* Use flexbox for internal alignment */
+  align-items: baseline; /* Align text nicely */
+  justify-content: center; /* Center content */
+  padding: 0.8rem 1rem;
+  border-radius: calc(var(--border-radius) / 1.5);
+  border: 1px solid var(--result-item-border-light);
+  background-color: var(--result-item-bg-light);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  transition: background-color var(--transition-speed), border-color var(--transition-speed);
+}
+body.dark-mode .results li.time-result-item {
+  background-color: var(--result-item-bg-dark);
+  border-color: var(--result-item-border-dark);
+}
+
+.results li.time-result-item .time-part {
+  font-weight: 600;
+  font-size: 1.2em; /* Make time parts slightly larger */
+}
+.results li.time-result-item .time-separator {
+  margin: 0 0.1em;
+  font-weight: 600;
+   font-size: 1.2em;
+}
+.results li.time-result-item .ampm {
+  font-size: 1em; /* Slightly smaller AM/PM */
+  margin-left: 0.3em;
+  font-weight: 500;
+  opacity: 0.9;
+}
+.results li.time-result-item .cycle-count {
+  font-size: 0.85em;
+  margin-left: 0.7em;
+  opacity: 0.8;
+  font-style: italic;
+}
+
+
+.results .note {
+  font-size: 0.9rem;
+  opacity: 0.8;
+  margin-top: 1rem;
+  margin-bottom: 0;
+  text-align: center;
+}
+
+/* REM Calc Specific */
+#rem-form input[type="number"] {
+    padding: 0.6rem 0.8rem;
+    border: 1px solid var(--input-border-light);
+    border-radius: calc(var(--border-radius) / 2);
+    font-size: 1rem;
+    background-color: var(--input-bg-light);
+    color: var(--text-color-light);
+    transition: background-color var(--transition-speed), border-color var(--transition-speed);
+    width: 100%; /* Make inputs full width */
+    box-sizing: border-box; /* Include padding and border in width */
+    max-width: 200px; /* Optional: Limit max width */
+}
+body.dark-mode #rem-form input[type="number"] {
+    background-color: var(--input-bg-dark);
+    color: var(--text-color-dark);
+    border-color: var(--input-border-dark);
+}
+#rem-form input[type="number"]:focus {
+    outline: none;
+    border-color: var(--primary-color-light);
+}
+body.dark-mode #rem-form input[type="number"]:focus {
+    border-color: var(--primary-color-dark);
+}
+
+/* REM Results List */
+#rem-results ul#rem-phase-list {
+    display: block; /* Override grid */
+    grid-template-columns: none; /* Reset grid columns */
+}
+
+#rem-results li.rem-result-item {
+    background-color: var(--rem-result-bg-light);
+    border: 1px solid var(--rem-result-border-light);
+    color: inherit; /* Inherit text color */
+    padding: 0.8rem 1.2rem;
+    margin-bottom: 0.5rem; /* Space between REM items */
+    border-radius: calc(var(--border-radius) / 2);
+    line-height: 1.5;
+    /* Reset styles inherited from time-result-item if needed */
+    display: block;
+    text-align: left;
+    box-shadow: none;
+}
+body.dark-mode #rem-results li.rem-result-item {
+    background-color: var(--rem-result-bg-dark);
+    border-color: var(--rem-result-border-dark);
+}
+#rem-results li.rem-result-item strong {
+    font-weight: 600;
+    color: var(--primary-color-light); /* Highlight cycle number */
+}
+body.dark-mode #rem-results li.rem-result-item strong {
+    color: var(--primary-color-dark);
+}
+
+#rem-results li.rem-result-item em {
+    font-style: normal;
+    opacity: 0.9;
+    margin-left: 1em; /* Indent details */
+    display: inline-block; /* Ensure proper spacing */
+}
+#rem-results li.final-wake {
+    margin-top: 1rem;
+    background-color: transparent;
+    border: none;
+    border-top: 1px dashed rgba(128, 128, 128, 0.3);
+    padding-top: 1rem;
+    text-align: center;
+    font-weight: 600;
+}
+body.dark-mode #rem-results li.final-wake {
+     border-top-color: rgba(200, 200, 200, 0.3);
+}
+
+
+/* Chart Container */
+.chart-container {
+    margin-top: 1.5rem;
+    position: relative; /* Needed for Chart.js responsiveness */
+    height: 250px; /* Default height */
+    width: 100%;
+}
+
+#rem-chart {
+    display: block; /* Prevent extra space */
+    max-width: 100%; /* Ensure it doesn't overflow */
+    height: 100%; /* Fill container height */
+    width: 100%; /* Fill container width */
+}
+
+
+/* AI Placeholders */
+.feature-placeholder {
+    border: 2px dashed rgba(128, 128, 128, 0.4);
+    padding: 1rem;
+    border-radius: var(--border-radius);
+    text-align: center;
+    opacity: 0.7;
+    margin-bottom: 1rem; /* Add space between placeholders */
+}
+.feature-placeholder h4 {
+    margin-top: 0;
+    margin-bottom: 0.5rem;
+}
+.feature-placeholder p {
+    margin-bottom: 0;
+    font-size: 0.9rem;
+}
+
+
+footer {
+  margin-top: 3rem;
+  text-align: center;
+  font-size: 0.9rem;
+  opacity: 0.7;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(128, 128, 128, 0.3);
+  position: relative; /* Needed for absolute positioning of the button if desired */
+  padding-bottom: 2.5rem; /* Add padding to prevent overlap if button is at bottom */
+}
+
+/* Adjust footer paragraph alignment if needed */
+footer p {
+  text-align: center; /* Keep copyright centered */
+}
+
+.admin-login-button {
+  position: absolute; /* Position it within the footer */
+  bottom: 1rem; /* Distance from bottom */
+  right: 1rem; /* Distance from right */
+  padding: 0.3rem 0.8rem;
+  font-size: 0.8rem;
+  text-decoration: none;
+  border: 1px solid var(--input-border-light);
+  border-radius: calc(var(--border-radius) / 2);
+  color: var(--text-color-light);
+  background-color: var(--card-bg-light);
+  transition: background-color var(--transition-speed), color var(--transition-speed), border-color var(--transition-speed);
+  opacity: 0.7;
+}
+
+body.dark-mode .admin-login-button {
+  color: var(--text-color-dark);
+  background-color: var(--card-bg-dark);
+  border-color: var(--input-border-dark);
+}
+
+.admin-login-button:hover {
+  opacity: 1;
+  background-color: var(--result-item-bg-light); /* Subtle hover */
+  border-color: var(--primary-color-light);
+}
+
+body.dark-mode .admin-login-button:hover {
+  background-color: var(--result-item-bg-dark);
+  border-color: var(--primary-color-dark);
+}
+
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  header h1 {
+    font-size: 2rem;
+  }
+  nav.main-nav ul {
+      gap: 1rem; /* Slightly reduce gap */
+      justify-content: space-around; /* Better distribution */
+  }
+  nav.main-nav a {
+      font-size: 0.95rem;
+  }
+  .card {
+    padding: 1rem 1.5rem;
+  }
+  .calculator-section h2 {
+    font-size: 1.5rem;
+  }
+   .results ul#bedtime-options,
+   .results ul#wakeup-options {
+     grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); /* Adjust grid for smaller screens */
+   }
+   .results li.time-result-item {
+       padding: 0.6rem 0.8rem;
+       font-size: 0.95em; /* Slightly smaller font */
+   }
+   .chart-container {
+       height: 220px; /* Adjust chart height */
+   }
+}
+
+@media (max-width: 480px) {
+  #app {
+    padding: 0.5rem;
+    margin: 1rem auto;
+  }
+  .header-top {
+    flex-direction: column;
+    gap: 0.5rem;
+    text-align: center;
+    margin-bottom: 1rem;
+  }
+  nav.main-nav ul {
+      gap: 0.5rem; /* Reduce gap further */
+      justify-content: space-around;
+  }
+   nav.main-nav a {
+      font-size: 0.9rem;
+      padding: 0.4rem 0.1rem;
+  }
+  .tabs {
+      font-size: 0.9rem; /* Smaller tabs */
+  }
+  .tab-button {
+      padding: 0.6rem 0.8rem;
+  }
+  input.flatpickr-input {
+      padding: 0.6rem 0.8rem;
+      padding-right: 2.5rem; /* Adjust icon padding */
+      font-size: 0.95rem;
+  }
+  .calculate-button {
+      font-size: 1rem;
+      padding: 0.7rem 1.2rem;
+  }
+  .results ul#bedtime-options,
+  .results ul#wakeup-options {
+      grid-template-columns: 1fr; /* Stack results on very small screens */
+      gap: 0.5rem;
+  }
+   .results li.time-result-item {
+      padding: 0.5rem 0.8rem;
+      font-size: 0.9em;
+   }
+   .results li.time-result-item .time-part {
+       font-size: 1.1em;
+   }
+    .results li.time-result-item .cycle-count {
+       font-size: 0.8em;
+       margin-left: 0.5em;
+   }
+   .chart-container {
+       height: 200px; /* Reduce chart height further */
+   }
+   #rem-form input[type="number"] {
+       max-width: none; /* Allow full width on small screens */
+   }
+   /* Responsive adjustments for the admin button */
+   .admin-login-button {
+    font-size: 0.75rem;
+    padding: 0.25rem 0.6rem;
+    /* Optional: Make it less intrusive on small screens */
+    /* position: static; */
+    /* display: block; */
+    /* margin: 0.5rem auto 0; */
+    /* width: fit-content; */
+  }
+  footer {
+     padding-bottom: 3.5rem; /* More space if button is absolutely positioned */
+  }
+}
+
+/* --- Flatpickr Time Picker Enhancements --- */
+
+/* General popup styling */
+.flatpickr-calendar {
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-light);
+    /* Make width slightly wider for easier interaction */
+    width: auto; /* Allow content to determine width */
+    min-width: 280px; /* Ensure minimum width */
+}
+body.dark-mode .flatpickr-calendar {
+    background: var(--card-bg-dark);
+    border: 1px solid var(--input-border-dark);
+    box-shadow: var(--shadow-dark);
+}
+
+/* Time container */
+.flatpickr-time {
+    padding: 10px; /* Add some padding */
+    border-radius: var(--border-radius); /* Match overall radius */
+}
+body.dark-mode .flatpickr-time {
+    border-top: 1px solid var(--input-border-dark); /* Add separator in dark mode */
+}
+
+/* Input wrappers (hour, minute, am/pm) */
+.flatpickr-time .numInputWrapper {
+    margin: 0 4px; /* Add slight spacing */
+    flex: 1; /* Allow flexible sizing */
+}
+
+/* Hour/Minute inputs */
+.flatpickr-time .numInput {
+    font-size: 1.3rem; /* Larger font size */
+    font-weight: 500;
+    border: none;
+    background: transparent;
+    padding: 5px 0; /* Adjust vertical padding */
+    text-align: center;
+    appearance: textfield; /* Remove default number input spinners */
+    -moz-appearance: textfield;
+    color: var(--text-color-light);
+    border-bottom: 2px solid transparent; /* Add space for focus indicator */
+    transition: border-color var(--transition-speed);
+}
+body.dark-mode .flatpickr-time .numInput {
+    color: var(--text-color-dark);
+}
+.flatpickr-time .numInput:focus {
+    outline: none;
+    border-bottom-color: var(--primary-color-light);
+}
+body.dark-mode .flatpickr-time .numInput:focus {
+    border-bottom-color: var(--primary-color-dark);
+}
+
+/* Arrows */
+.flatpickr-time .arrowUp,
+.flatpickr-time .arrowDown {
+    cursor: pointer;
+    height: 18px; /* Increase clickable area */
+    padding: 0 8px; /* Add horizontal padding */
+    opacity: 0.7;
+    transition: opacity var(--transition-speed);
+}
+.flatpickr-time .arrowUp:hover,
+.flatpickr-time .arrowDown:hover {
+    opacity: 1;
+    background: rgba(128, 128, 128, 0.1); /* Subtle hover effect */
+}
+.flatpickr-time .arrowUp::after {
+    border-bottom-color: var(--primary-color-light);
+    border-width: 0 4px 4px; /* Make arrow slightly bolder */
+}
+.flatpickr-time .arrowDown::after {
+    border-top-color: var(--primary-color-light);
+    border-width: 4px 4px 0; /* Make arrow slightly bolder */
+}
+body.dark-mode .flatpickr-time .arrowUp::after {
+    border-bottom-color: var(--primary-color-dark);
+}
+body.dark-mode .flatpickr-time .arrowDown::after {
+    border-top-color: var(--primary-color-dark);
+}
+
+/* AM/PM selector */
+.flatpickr-am-pm {
+    font-size: 1.2rem; /* Larger font */
+    padding: 8px 6px; /* Adjust padding */
+    font-weight: 500;
+    color: var(--text-color-light);
+    transition: background-color var(--transition-speed), color var(--transition-speed);
+}
+body.dark-mode .flatpickr-am-pm {
+    color: var(--text-color-dark);
+}
+.flatpickr-am-pm:hover {
+    background: var(--primary-color-light);
+    color: white;
+}
+body.dark-mode .flatpickr-am-pm:hover {
+    background: var(--primary-color-dark);
+    color: var(--text-color-dark); /* Keep text readable */
+}
+.flatpickr-am-pm:focus {
+    outline: none;
+    background: rgba(128, 128, 128, 0.1);
+}
+
+/* Time separator */
+.flatpickr-time .flatpickr-time-separator {
+    font-size: 1.3rem; /* Match input font size */
+    font-weight: 500;
+    color: inherit;
+    margin-top: 5px; /* Align vertically better */
+}
+
+/* Mobile specific adjustments */
+@media (max-width: 480px) {
+    .flatpickr-calendar {
+        /* Ensure it fits screen width */
+        max-width: 95vw;
+        min-width: 0;
+        width: auto;
+    }
+    .flatpickr-time .numInput {
+        font-size: 1.5rem; /* Even larger on mobile */
+    }
+    .flatpickr-am-pm {
+        font-size: 1.4rem; /* Larger AM/PM */
+    }
+    .flatpickr-time .arrowUp,
+    .flatpickr-time .arrowDown {
+        height: 22px; /* Larger touch target */
+    }
+}
+
+/* Styles for static content pages */
+.static-page-content {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background-color: var(--card-bg-light);
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow-light);
+}
+body.dark-mode .static-page-content {
+  background-color: var(--card-bg-dark);
+  box-shadow: var(--shadow-dark);
+}
+.static-page-content h1 {
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+  border-bottom: 1px solid rgba(128, 128, 128, 0.3);
+  padding-bottom: 0.8rem;
+}
+.static-page-content h2 {
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  color: var(--primary-color-light);
+}
+body.dark-mode .static-page-content h2 {
+  color: var(--primary-color-dark);
+}
+.static-page-content p {
+  margin-bottom: 1rem;
+  line-height: 1.7;
+}
+.static-page-content ul {
+  margin-bottom: 1rem;
+  padding-left: 1.5rem;
+}
+.static-page-content li {
+  margin-bottom: 0.5rem;
+}
+.static-page-content a {
+  color: var(--primary-color-light);
+  text-decoration: none;
+  transition: color var(--transition-speed);
+}
+body.dark-mode .static-page-content a {
+  color: var(--accent-color-dark);
+}
+.static-page-content a:hover {
+  text-decoration: underline;
+  color: var(--secondary-color-light);
+}
+body.dark-mode .static-page-content a:hover {
+  color: var(--secondary-color-dark);
+}

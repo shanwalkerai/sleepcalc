@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Sleep Calculator</title>
+    <link rel="stylesheet" href="/style.css"> <!-- Base styles -->
+    <link rel="stylesheet" href="/admin.css"> <!-- Admin specific styles -->
+    <!-- Quill CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.snow.css" rel="stylesheet">
+</head>
+<body class="light-mode admin-body"> <!-- Add admin-body class -->
+
+    <header class="admin-header">
+        <div class="logo"><a href="/">Sleep Calc Admin</a></div>
+        <nav class="admin-header-nav">
+            <ul>
+                <li><a href="/" target="_blank">View Site</a></li>
+                <li><button id="admin-logout-button">Logout</button></li>
+                <li><button id="theme-toggle" aria-label="Toggle light/dark mode">🌙</button></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="admin-main-container">
+        <aside class="admin-sidebar">
+            <nav>
+                <ul>
+                    <li><a href="#home-page-edit" class="sidebar-link active" data-target="home-page-edit"><span class="icon">🏠</span> <span class="link-text">Home Page</span></a></li>
+                    <li><a href="#menu-edit" class="sidebar-link" data-target="menu-edit"><span class="icon">☰</span> <span class="link-text">Menu Edit</span></a></li>
+                    <li><a href="#footer-edit" class="sidebar-link" data-target="footer-edit"><span class="icon">🦶</span> <span class="link-text">Footer Edit</span></a></li>
+                    <li><a href="#blog-articles" class="sidebar-link" data-target="blog-articles"><span class="icon">📰</span> <span class="link-text">Blog Articles</span></a></li>
+                    <li><a href="#seo-manager" class="sidebar-link" data-target="seo-manager"><span class="icon">🔍</span> <span class="link-text">SEO Manager</span></a></li>
+                    <li><a href="#popups" class="sidebar-link" data-target="popups"><span class="icon">📢</span> <span class="link-text">Popups</span></a></li>
+                    <li><a href="#media-manager" class="sidebar-link" data-target="media-manager"><span class="icon">🖼️</span> <span class="link-text">Media</span></a></li>
+                    <li><a href="#analytics" class="sidebar-link" data-target="analytics"><span class="icon">📊</span> <span class="link-text">Analytics</span></a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <main class="admin-content-area">
+            <div id="admin-status-message"></div> <!-- Global status message area -->
+
+            <!-- Home Page Edit Module -->
+            <section id="home-page-edit" class="admin-module active">
+                <h2>Home Page Content (Live Edit)</h2>
+                <p>Click "Edit" next to a field to modify its content directly. Changes are saved individually.</p>
+                <div id="home-content-editor" class="live-editor-container">
+                    <!-- Editable fields will be loaded dynamically here -->
+                    <div class="loading-indicator">Loading home page content...</div>
+                </div>
+                <!-- Removed the old form and save button -->
+            </section>
+
+            <!-- Menu Edit Module -->
+            <section id="menu-edit" class="admin-module">
+                <h2>Main Navigation Menu</h2>
+                <div class="admin-table-wrapper">
+                    <table class="admin-table" id="menu-items-table">
+                        <thead>
+                            <tr>
+                                <th>Order</th>
+                                <th>Title</th>
+                                <th>URL</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Menu items will be loaded here -->
+                            <tr><td colspan="4" class="loading-indicator">Loading menu items...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <hr style="margin: 1.5rem 0;">
+                <h3>Add/Edit Menu Item</h3>
+                <form id="menu-item-form" class="admin-form">
+                    <input type="hidden" id="menu-item-id">
+                    <div class="form-group">
+                        <label for="menu-item-title">Title</label>
+                        <input type="text" id="menu-item-title" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="menu-item-url">URL</label>
+                        <input type="text" id="menu-item-url" required placeholder="e.g., /about.html or https://example.com">
+                    </div>
+                    <div class="form-group">
+                        <label for="menu-item-order">Order</label>
+                        <input type="number" id="menu-item-order" value="0" step="1">
+                    </div>
+                    <button type="submit" class="admin-button">Save Menu Item</button>
+                    <button type="button" id="cancel-menu-edit" class="admin-button secondary" style="display: none;">Cancel Edit</button>
+                </form>
+            </section>
+
+            <!-- Footer Edit Module -->
+            <section id="footer-edit" class="admin-module">
+                <h2>Footer Content</h2>
+                <form id="footer-settings-form" class="admin-form">
+                    <h3>General Footer Text</h3>
+                    <div class="form-group">
+                        <label for="footer-copyright">Copyright Text</label>
+                        <input type="text" id="footer-copyright" name="footer.copyrightText">
+                         <div class="loading-indicator" id="copyright-loading">Loading...</div>
+                    </div>
+                     <button type="submit" class="admin-button">Save Footer Text</button>
+                </form>
+                 <hr style="margin: 1.5rem 0;">
+                 <h3>Footer Links</h3>
+                 <div class="admin-table-wrapper">
+                    <table class="admin-table" id="footer-links-table">
+                        <thead>
+                            <tr>
+                                <th>Order</th>
+                                <th>Title</th>
+                                <th>URL</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Footer links will be loaded here -->
+                             <tr><td colspan="4" class="loading-indicator">Loading footer links...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                 <hr style="margin: 1.5rem 0;">
+                <h3>Add/Edit Footer Link</h3>
+                <form id="footer-link-form" class="admin-form">
+                    <input type="hidden" id="footer-link-id">
+                    <div class="form-group">
+                        <label for="footer-link-title">Title</label>
+                        <input type="text" id="footer-link-title" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="footer-link-url">URL</label>
+                        <input type="text" id="footer-link-url" required placeholder="e.g., /privacy.html">
+                    </div>
+                    <div class="form-group">
+                        <label for="footer-link-order">Order</label>
+                        <input type="number" id="footer-link-order" value="0" step="1">
+                    </div>
+                    <button type="submit" class="admin-button">Save Footer Link</button>
+                    <button type="button" id="cancel-footer-link-edit" class="admin-button secondary" style="display: none;">Cancel Edit</button>
+                </form>
+            </section>
+
+            <!-- Blog Articles Module -->
+            <section id="blog-articles" class="admin-module">
+                <h2>Blog Articles</h2>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; flex-wrap: wrap; gap: 1rem;">
+                    <button id="add-new-post-button" class="admin-button">Add New Post</button>
+                    <div style="display: flex; gap: 0.5rem; align-items: center;">
+                        <input type="search" id="blog-search" placeholder="Search titles..." style="padding: 0.5rem;">
+                        <select id="blog-filter-status" style="padding: 0.5rem;">
+                            <option value="">All Statuses</option>
+                            <option value="published">Published</option>
+                            <option value="draft">Draft</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Blog Post Form (Hidden by default) -->
+                 <div id="blog-post-form-container" style="display: none; margin-top: 1.5rem; padding: 1.5rem; border: 1px solid var(--admin-border-light); border-radius: var(--border-radius); background: var(--card-bg-light);">
+                     <body.dark-mode> > background: var(--card-bg-dark); border-color: var(--admin-border-dark); </body.dark-mode>
+                    <h3 id="blog-form-title">Add New Post</h3>
+                    <form id="blog-post-form" class="admin-form">
+                        <input type="hidden" id="blog-post-id">
+                        <div class="form-group">
+                            <label for="blog-post-title">Title</label>
+                            <input type="text" id="blog-post-title" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="blog-post-slug">Slug</label>
+                            <input type="text" id="blog-post-slug" required pattern="[a-z0-9]+(?:-[a-z0-9]+)*" title="Use lowercase letters, numbers, and hyphens only (e.g., my-first-post)">
+                            <small>URL-friendly identifier (e.g., my-awesome-post)</small>
+                        </div>
+                        <div class="form-group">
+                            <label for="blog-post-content">Content</label>
+                            <!-- Quill Editor Container -->
+                            <div id="quill-editor"></div>
+                            <textarea id="blog-post-content" name="blog-post-content" style="display:none;"></textarea> <!-- Hidden textarea to store HTML -->
+                        </div>
+                         <div class="form-group">
+                            <label for="blog-post-image-url">Featured Image URL</label>
+                            <input type="url" id="blog-post-image-url" placeholder="https://example.com/image.jpg">
+                        </div>
+                         <div class="form-group">
+                            <label for="blog-post-meta-title">Meta Title (SEO)</label>
+                            <input type="text" id="blog-post-meta-title">
+                        </div>
+                         <div class="form-group">
+                            <label for="blog-post-meta-description">Meta Description (SEO)</label>
+                            <textarea id="blog-post-meta-description"></textarea>
+                        </div>
+                         <div class="form-group">
+                            <label for="blog-post-keywords">Keywords (comma-separated)</label>
+                            <input type="text" id="blog-post-keywords" placeholder="sleep, calculator, rem">
+                        </div>
+                        <div class="form-group">
+                            <label for="blog-post-status">Status</label>
+                            <select id="blog-post-status" required>
+                                <option value="draft">Draft</option>
+                                <option value="published">Published</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="admin-button">Save Post</button>
+                        <button type="button" id="cancel-post-edit" class="admin-button secondary">Cancel</button>
+                    </form>
+                </div>
+
+                <!-- Blog Post List Table -->
+                <div class="admin-table-wrapper">
+                    <table class="admin-table" id="blog-posts-table">
+                        <thead>
+                            <tr>
+                                <th>Title</th>
+                                <th>Slug</th>
+                                <th>Status</th>
+                                <th>Last Updated</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Blog posts will be loaded here -->
+                             <tr><td colspan="5" class="loading-indicator">Loading blog posts...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- SEO Manager Module -->
+            <section id="seo-manager" class="admin-module">
+                <h2>SEO Manager</h2>
+                 <form id="seo-settings-form" class="admin-form">
+                    <h3>Sitewide Defaults</h3>
+                     <div class="form-group">
+                        <label for="seo-site-title">Default Site Title</label>
+                        <input type="text" id="seo-site-title" name="siteTitle">
+                         <div class="loading-indicator" id="seo-title-loading">Loading...</div>
+                    </div>
+                     <div class="form-group">
+                        <label for="seo-site-description">Default Meta Description</label>
+                        <textarea id="seo-site-description" name="description"></textarea>
+                         <div class="loading-indicator" id="seo-desc-loading">Loading...</div>
+                    </div>
+                     <!-- Add more sitewide SEO fields if needed -->
+                     <button type="submit" class="admin-button">Save SEO Defaults</button>
+                 </form>
+                 <hr style="margin: 1.5rem 0;">
+                 <p><em>Note: Blog post specific SEO (meta title, description, keywords) is managed within the Blog Articles section when editing a post.</em></p>
+            </section>
+
+            <!-- Popups Module -->
+            <section id="popups" class="admin-module">
+                <h2>Announcements / Popups</h2>
+                 <div class="admin-table-wrapper">
+                    <table class="admin-table" id="popups-table">
+                        <thead>
+                            <tr>
+                                <th>Message (Preview)</th>
+                                <th>Start Time</th>
+                                <th>End Time</th>
+                                <th>Active</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Popups will be loaded here -->
+                             <tr><td colspan="5" class="loading-indicator">Loading popups...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                 <hr style="margin: 1.5rem 0;">
+                <h3>Add/Edit Popup</h3>
+                <form id="popup-form" class="admin-form">
+                    <input type="hidden" id="popup-id">
+                    <div class="form-group">
+                        <label for="popup-message">Message (HTML allowed)</label>
+                        <textarea id="popup-message" required rows="4"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="popup-start-time">Start Time (Optional)</label>
+                        <input type="datetime-local" id="popup-start-time">
+                    </div>
+                     <div class="form-group">
+                        <label for="popup-end-time">End Time (Optional)</label>
+                        <input type="datetime-local" id="popup-end-time">
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" id="popup-is-active" checked>
+                            Is Active
+                        </label>
+                    </div>
+                    <button type="submit" class="admin-button">Save Popup</button>
+                    <button type="button" id="cancel-popup-edit" class="admin-button secondary" style="display: none;">Cancel Edit</button>
+                </form>
+            </section>
+
+            <!-- Media Manager Module (Placeholder) -->
+            <section id="media-manager" class="admin-module">
+                <h2>Media Manager</h2>
+                <p><em>Media management functionality (e.g., image uploads via Supabase Storage) will be added here in the future.</em></p>
+                <p>For now, please upload images elsewhere and paste the URL into relevant fields (like Blog Post Featured Image).</p>
+            </section>
+
+            <!-- Analytics Module (Placeholder) -->
+            <section id="analytics" class="admin-module">
+                <h2>Analytics</h2>
+                <p><em>Analytics integration (e.g., Google Analytics embedding or custom stats) will be displayed here.</em></p>
+                 <div style="max-width: 600px; margin-top: 2rem; opacity: 0.5;">
+                     <canvas id="analytics-placeholder-chart"></canvas>
+                 </div>
+            </section>
+
+        </main>
+    </div>
+
+    <!-- Quill JS -->
+    <script src="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.js"></script>
+    <!-- Chart.js (for placeholder) -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Admin Script -->
+    <script type="module" src="/admin.js"></script>
+</body>
+</html>

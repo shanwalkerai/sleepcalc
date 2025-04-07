@@ -1,0 +1,140 @@
+<!doctype html>
+      <html lang="en">
+      <head>
+        <meta charset="UTF-8" />
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="description" content="Calculate your ideal bedtime or wake-up time based on sleep cycles and REM phases. Get personalized sleep advice.">
+        <title>Sleep Calculator - Find Your Perfect Sleep Schedule</title>
+        <!-- Flatpickr CSS -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+        <!-- Main Stylesheet -->
+        <link rel="stylesheet" href="/style.css">
+      </head>
+      <body class="light-mode">
+        <div id="app">
+          <header>
+            <div class="header-top">
+              <h1>Sleep Calculator</h1>
+              <button id="theme-toggle" aria-label="Toggle light/dark mode">🌙</button>
+            </div>
+            <nav class="main-nav">
+              <ul>
+                <li><a href="/" class="active">Home</a></li>
+                <li><a href="/about.html">About Us</a></li>
+                <li><a href="/contact.html">Contact Us</a></li>
+                <li><a href="/privacy.html">Privacy Policy</a></li>
+                <li><a href="/terms.html">Terms & Conditions</a></li>
+                <li><a href="/blog.html">Blog Posts</a></li> {/* Added Blog Posts link */}
+              </ul>
+            </nav>
+          </header>
+
+          <main>
+            <section id="sleep-cycle-calculator" class="calculator-section card">
+              <h2><span class="icon">⏱️</span> Sleep Cycle Calculator</h2>
+              <p>Calculate the best time to wake up or go to bed based on 90-minute sleep cycles.</p>
+
+              <div class="tabs">
+                <button class="tab-button active" data-tab="wake-up">I want to wake up at...</button>
+                <button class="tab-button" data-tab="go-to-bed">I need to go to bed at...</button>
+              </div>
+
+              <form id="wake-up-form" class="calculator-form active-form">
+                <label for="wake-up-time-input">Select your desired wake-up time:</label>
+                <!-- Flatpickr Input -->
+                <div class="time-picker-container">
+                  <input type="text" id="wake-up-time-input" class="flatpickr-input" placeholder="Select wake-up time..." readonly="readonly">
+                </div>
+                <button type="submit" class="calculate-button">Calculate Bedtimes</button>
+                <div id="wake-up-results" class="results">
+                  <p>If you want to wake up at <strong id="target-wake-time">--:-- --</strong>, you should aim to fall asleep at one of these times:</p>
+                  <ul id="bedtime-options">
+                    <!-- Results will be populated here -->
+                  </ul>
+                  <p class="note">It takes the average person 15 minutes to fall asleep.</p>
+                </div>
+              </form>
+
+              <form id="go-to-bed-form" class="calculator-form">
+                <label for="bed-time-input">Select your desired bedtime:</label>
+                 <!-- Flatpickr Input -->
+                 <div class="time-picker-container">
+                   <input type="text" id="bed-time-input" class="flatpickr-input" placeholder="Select bedtime..." readonly="readonly">
+                 </div>
+                <button type="submit" class="calculate-button">Calculate Wake-up Times</button>
+                 <div id="go-to-bed-results" class="results">
+                   <p>If you go to bed at <strong id="target-bed-time">--:-- --</strong>, you should aim to wake up at one of these times for optimal rest:</p>
+                  <ul id="wakeup-options">
+                    <!-- Results will be populated here -->
+                  </ul>
+                   <p class="note">Assumes you fall asleep around 15 minutes after getting into bed.</p>
+                </div>
+              </form>
+            </section>
+
+            <section id="rem-calculator" class="calculator-section card">
+               <h2><span class="icon">🧠</span> REM Sleep Calculator</h2>
+               <p>Estimate when your REM sleep phases might occur during your sleep period.</p>
+               <form id="rem-form" class="calculator-form active-form"> <!-- Make REM form active by default for this section -->
+                  <label for="rem-bed-time-input">Select your bedtime:</label>
+                   <!-- Flatpickr Input -->
+                   <div class="time-picker-container">
+                     <input type="text" id="rem-bed-time-input" class="flatpickr-input" placeholder="Select bedtime..." readonly="readonly">
+                   </div>
+                   <label for="total-sleep-hours">How long do you plan to sleep (hours)?</label>
+                   <input type="number" id="total-sleep-hours" name="total-sleep-hours" min="1" max="16" step="0.5" value="8" required aria-describedby="sleep-hours-desc">
+                   <small id="sleep-hours-desc" class="input-description">Enter total sleep duration (e.g., 7.5 for 7 hours 30 mins).</small>
+
+
+                   <!-- Optional inputs -->
+                   <label for="user-age">Your Age (optional):</label>
+                   <input type="number" id="user-age" name="user-age" min="1" max="120" aria-describedby="age-desc">
+                   <small id="age-desc" class="input-description">Age can slightly influence REM patterns (optional).</small>
+
+
+                   <button type="submit" class="calculate-button">Estimate REM Phases</button>
+                   <div id="rem-results" class="results">
+                      <p>Estimated REM phases and light sleep windows:</p>
+                      <ul id="rem-phase-list">
+                          <!-- REM results here -->
+                      </ul>
+                      <div class="chart-container" style="position: relative; height:250px; width:100%;">
+                        <canvas id="rem-chart"></canvas> <!-- Chart.js canvas -->
+                      </div>
+                   </div>
+               </form>
+            </section>
+
+            <section id="ai-features" class="calculator-section card">
+              <h2><span class="icon">🤖</span> AI Sleep Assistant (Coming Soon)</h2>
+              <p>Get personalized advice, chat about sleep, and check your sleep score.</p>
+              <div class="feature-placeholder">
+                  <h4>Personalized Sleep Advice</h4>
+                  <p>Based on your inputs and patterns.</p>
+              </div>
+               <div class="feature-placeholder">
+                  <h4>Sleep Health Score</h4>
+                  <p>An AI-powered score out of 100.</p>
+              </div>
+               <div class="feature-placeholder">
+                  <h4>Sleep Chatbot</h4>
+                  <p>Ask questions about sleep health.</p>
+              </div>
+            </section>
+
+          </main>
+
+          <footer>
+            <p>&copy; <span id="current-year"></span> Sleep Calculator. All rights reserved.</p>
+            <!-- Update link to point to admin-login.html -->
+            <a href="/admin-login.html" class="admin-login-button">Admin Login</a>
+          </footer>
+        </div>
+
+        <!-- Flatpickr JS -->
+        <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+        <!-- Main App Script -->
+        <script type="module" src="/main.js"></script>
+      </body>
+      </html>

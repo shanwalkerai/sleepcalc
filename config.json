@@ -1,0 +1,52 @@
+{
+  "siteTitle": "Sleep Calculator",
+  "description": "Calculate your ideal bedtime or wake-up time based on sleep cycles and REM phases. Get personalized sleep advice.",
+  "sleepCycleCalculator": {
+    "title": "Sleep Cycle Calculator",
+    "description": "Calculate the best time to wake up or go to bed based on 90-minute sleep cycles.",
+    "wakeUpTab": "I want to wake up at...",
+    "goToBedTab": "I need to go to bed at...",
+    "wakeUpLabel": "Select your desired wake-up time:",
+    "bedTimeLabel": "Select your desired bedtime:",
+    "calculateBedtimesButton": "Calculate Bedtimes",
+    "calculateWakeUpTimesButton": "Calculate Wake-up Times",
+    "wakeUpResultPrefix": "If you want to wake up at",
+    "wakeUpResultSuffix": ", you should aim to fall asleep at one of these times:",
+    "goToBedResultPrefix": "If you go to bed at",
+    "goToBedResultSuffix": ", you should aim to wake up at one of these times for optimal rest:",
+    "fallAsleepNote": "It takes the average person 15 minutes to fall asleep.",
+    "wakeUpNote": "Assumes you fall asleep around 15 minutes after getting into bed.",
+    "fallAsleepTimeMinutes": 15,
+    "sleepCycleMinutes": 90,
+    "numCycleSuggestions": 6,
+    "minCycles": 3
+  },
+  "remCalculator": {
+    "visible": true,
+    "title": "REM Sleep Calculator",
+    "description": "Estimate when your REM sleep phases might occur during your sleep period.",
+    "bedTimeLabel": "Select your bedtime:",
+    "sleepDurationLabel": "How long do you plan to sleep (hours)?",
+    "sleepDurationDescription": "Enter total sleep duration (e.g., 7.5 for 7 hours 30 mins).",
+    "ageLabel": "Your Age (optional):",
+    "ageDescription": "Age can slightly influence REM patterns (optional).",
+    "calculateButton": "Estimate REM Phases",
+    "resultsTitle": "Estimated REM phases and light sleep windows:",
+    "chartLabel": "Estimated Sleep Stage",
+    "invalidDurationMessage": "Please enter a valid number of sleep hours (e.g., 1-16)."
+  },
+  "aiFeatures": {
+    "visible": true,
+    "title": "AI Sleep Assistant (Coming Soon)",
+    "description": "Get personalized advice, chat about sleep, and check your sleep score.",
+    "adviceTitle": "Personalized Sleep Advice",
+    "adviceText": "Based on your inputs and patterns.",
+    "scoreTitle": "Sleep Health Score",
+    "scoreText": "An AI-powered score out of 100.",
+    "chatbotTitle": "Sleep Chatbot",
+    "chatbotText": "Ask questions about sleep health."
+  },
+  "footer": {
+    "copyrightText": "Sleep Calculator. All rights reserved."
+  }
+}

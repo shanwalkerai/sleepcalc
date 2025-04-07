@@ -1,0 +1,109 @@
+<!doctype html>
+      <html lang="en">
+      <head>
+        <meta charset="UTF-8" />
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>About Us - Sleep Calculator</title>
+        <link rel="stylesheet" href="/style.css">
+      </head>
+      <body class="light-mode">
+        <div id="app">
+          <header>
+            <div class="header-top">
+              <h1>Sleep Calculator</h1>
+              <button id="theme-toggle" aria-label="Toggle light/dark mode">🌙</button>
+            </div>
+            <nav class="main-nav">
+              <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/about.html" class="active">About Us</a></li>
+                <li><a href="/contact.html">Contact Us</a></li>
+                <li><a href="/privacy.html">Privacy Policy</a></li>
+                <li><a href="/terms.html">Terms & Conditions</a></li>
+              </ul>
+            </nav>
+          </header>
+
+          <main class="static-page-content">
+            <h1>About Us</h1>
+
+            <p>Welcome to Sleep Calculator! Our mission is to help you understand and optimize your sleep schedule for better health and well-being.</p>
+
+            <h2>Our Tool</h2>
+            <p>We provide easy-to-use calculators based on established sleep science principles:</p>
+            <ul>
+              <li><strong>Sleep Cycle Calculator:</strong> Helps you determine the best times to go to bed or wake up by working backward or forward in 90-minute sleep cycles. This aims to help you wake up feeling refreshed, rather than groggy from interrupting a deep sleep phase.</li>
+              <li><strong>REM Sleep Calculator:</strong> Estimates when your Rapid Eye Movement (REM) sleep phases might occur throughout the night. Understanding these patterns can be helpful for various purposes, such as timing alarms or understanding dream recall.</li>
+            </ul>
+
+            <h2>Why Sleep Matters</h2>
+            <p>Quality sleep is fundamental to physical and mental health. It impacts everything from cognitive function, mood, and immune response to long-term health outcomes. We believe that by providing simple tools to understand sleep patterns, we can empower individuals to make small changes that lead to significant improvements in their daily lives.</p>
+
+            <h2>Our Commitment</h2>
+            <p>We are committed to providing accurate and helpful information based on general sleep science. However, please remember that our calculators provide estimates based on averages. Individual sleep needs and patterns can vary significantly.</p>
+            <p>This tool is intended for informational purposes only and does not constitute medical advice. If you have concerns about your sleep or health, please consult a qualified healthcare professional.</p>
+
+            <p>Thank you for using Sleep Calculator!</p>
+
+          </main>
+
+          <footer>
+            <p>&copy; <span id="current-year"></span> Sleep Calculator. All rights reserved.</p>
+             <!-- Update link to point to admin-login.html -->
+            <a href="/admin-login.html" class="admin-login-button">Admin Login</a>
+          </footer>
+        </div>
+        <script>
+          // Basic theme handling for static pages
+          const themeToggle = document.getElementById('theme-toggle');
+          const currentYearSpan = document.getElementById('current-year');
+          if (currentYearSpan) currentYearSpan.textContent = new Date().getFullYear();
+
+          function applyStaticTheme() {
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'dark') {
+              document.body.classList.add('dark-mode');
+              document.body.classList.remove('light-mode');
+              if (themeToggle) themeToggle.textContent = '☀️';
+            } else {
+              document.body.classList.add('light-mode');
+              document.body.classList.remove('dark-mode');
+              if (themeToggle) themeToggle.textContent = '🌙';
+            }
+          }
+
+          function toggleStaticTheme() {
+            document.body.classList.toggle('dark-mode');
+            document.body.classList.toggle('light-mode');
+            const isDarkMode = document.body.classList.contains('dark-mode');
+            if (themeToggle) themeToggle.textContent = isDarkMode ? '☀️' : '🌙';
+            localStorage.setItem('theme', isDarkMode ? 'dark' : 'light');
+          }
+
+          if (themeToggle) themeToggle.addEventListener('click', toggleStaticTheme);
+          applyStaticTheme();
+
+          // Set active link based on current page
+          document.addEventListener('DOMContentLoaded', () => {
+            const currentPath = window.location.pathname;
+            const navLinks = document.querySelectorAll('.main-nav a');
+            navLinks.forEach(link => {
+              if (link.getAttribute('href') === currentPath) {
+                link.classList.add('active');
+              } else {
+                link.classList.remove('active');
+              }
+            });
+             // Ensure home link is active only on the root page
+             if (currentPath !== '/') {
+                 const homeLink = document.querySelector('.main-nav a[href="/"]');
+                 if (homeLink) homeLink.classList.remove('active');
+             } else {
+                  const homeLink = document.querySelector('.main-nav a[href="/"]');
+                 if (homeLink) homeLink.classList.add('active');
+             }
+          });
+        </script>
+      </body>
+      </html>

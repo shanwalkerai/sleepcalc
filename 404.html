@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Page Not Found - Sleep Calculator</title>
+    <link rel="stylesheet" href="/style.css">
+    <style>
+        .not-found-container {
+            text-align: center;
+            padding: 4rem 1rem;
+        }
+        .not-found-container h1 {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            color: var(--primary-color-light);
+        }
+        body.dark-mode .not-found-container h1 {
+            color: var(--primary-color-dark);
+        }
+        .not-found-container p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+        }
+    </style>
+</head>
+<body class="light-mode">
+    <div id="app">
+        <header id="main-header">
+            <!-- Header will be loaded by JS -->
+             <div class="loading-indicator">Loading header...</div>
+        </header>
+
+        <main class="container mt-4 mb-5">
+            <div class="not-found-container card">
+                <h1>404</h1>
+                <p>Oops! The page you're looking for doesn't seem to exist.</p>
+                <a href="/" class="admin-button">Go Back Home</a>
+            </div>
+        </main>
+
+        <footer id="main-footer">
+            <!-- Footer will be loaded by JS -->
+             <div class="loading-indicator">Loading footer...</div>
+        </footer>
+    </div>
+     <script>
+        // Basic theme handling + year (copied from static pages)
+        const themeToggle = document.getElementById('theme-toggle'); // Will be loaded into header
+        const currentYearSpan = document.getElementById('current-year'); // Will be loaded into footer
+
+        function applyStaticTheme() {
+            const savedTheme = localStorage.getItem('theme');
+            const isDark = savedTheme === 'dark';
+            document.body.classList.toggle('dark-mode', isDark);
+            document.body.classList.toggle('light-mode', !isDark);
+             // Update toggle button text after header loads
+        }
+        function toggleStaticTheme() {
+            document.body.classList.toggle('dark-mode');
+            document.body.classList.toggle('light-mode');
+            const isDarkMode = document.body.classList.contains('dark-mode');
+             if (document.getElementById('theme-toggle')) { // Check if loaded
+                 document.getElementById('theme-toggle').textContent = isDarkMode ? '☀️' : '🌙';
+            }
+            localStorage.setItem('theme', isDarkMode ? 'dark' : 'light');
+        }
+
+        // Function to load includes
+        async function loadIncludes() {
+            try {
+                const headerRes = await fetch('/includes/header.html');
+                const headerEl = document.getElementById('main-header');
+                if (headerRes.ok && headerEl) {
+                    headerEl.innerHTML = await headerRes.text();
+                    // Re-select theme toggle after header load
+                    const loadedThemeToggle = document.getElementById('theme-toggle');
+                    if (loadedThemeToggle) {
+                        loadedThemeToggle.textContent = document.body.classList.contains('dark-mode') ? '☀️' : '🌙';
+                        loadedThemeToggle.addEventListener('click', toggleStaticTheme);
+                    }
+                } else if(headerEl) {
+                     headerEl.innerHTML = '<p class="error-indicator">Error loading header.</p>';
+                }
+
+                const footerRes = await fetch('/includes/footer.html');
+                 const footerEl = document.getElementById('main-footer');
+                if (footerRes.ok && footerEl) {
+                    footerEl.innerHTML = await footerRes.text();
+                     const loadedYearSpan = document.getElementById('current-year');
+                     if(loadedYearSpan) loadedYearSpan.textContent = new Date().getFullYear();
+                } else if (footerEl) {
+                     footerEl.innerHTML = '<p class="error-indicator">Error loading footer.</p>';
+                }
+            } catch (err) {
+                console.error("Error loading includes:", err);
+                 const headerEl = document.getElementById('main-header');
+                 const footerEl = document.getElementById('main-footer');
+                 if(headerEl) headerEl.innerHTML = '<p class="error-indicator">Error loading header.</p>';
+                 if(footerEl) footerEl.innerHTML = '<p class="error-indicator">Error loading footer.</p>';
+            }
+        }
+
+        applyStaticTheme(); // Apply theme immediately
+        loadIncludes(); // Load header/footer after DOM is ready
+    </script>
+</body>
+</html>

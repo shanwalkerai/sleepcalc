@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Blog | Sleep Calculator</title>
+    <meta name="description" content="Read latest blog articles about sleep, cycles, REM, and healthy habits.">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/style.css">
+    <style>
+        .blog-card-img { height: 200px; object-fit: cover; } /* Renamed class */
+        .card-body { display: flex; flex-direction: column; }
+        .card-text { flex-grow: 1; margin-bottom: 1rem; }
+        #app { display: flex; flex-direction: column; min-height: 100vh; }
+        main { flex-grow: 1; }
+    </style>
+</head>
+<body class="light-mode">
+    <div id="app">
+        <header id="main-header">
+             <!-- Header will be loaded by JS -->
+             <div class="loading-indicator">Loading header...</div>
+        </header>
+
+        <main class="container mt-4 mb-5">
+            <h1 class="mb-4">Our Blog</h1>
+            <p>Latest articles about sleep health, cycles, and tips.</p>
+            <div id="blog-posts-grid" class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+                <!-- New Blog Post Card -->
+                <div class="col">
+                    <div class="card h-100 shadow-sm blog-card">
+                         <img src="https://via.placeholder.com/400x200.png?text=Sleep+Cycle" class="card-img-top blog-card-img" alt="Sleep Cycle Calculator">
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                <a href="/sleep-cycle-calculator.html" class="text-decoration-none stretched-link">Sleep Cycle Calculator: The Only Way to Wake Up Without Feeling Like Garbage</a>
+                            </h5>
+                            <p class="card-text text-muted">Let’s be honest — nobody enjoys waking up feeling like a truck hit them. You slept for eight hours, so why does your face feel like it’s melting into the pillow? The issue isn’t the amount of sleep. It’s when you wake up...</p>
+                            <a href="/sleep-cycle-calculator.html" class="btn btn-sm btn-outline-primary mt-auto align-self-start">Read More</a>
+                        </div>
+                         <div class="card-footer text-muted" style="font-size: 0.85rem;">
+                            Published: July 27, 2024
+                        </div>
+                    </div>
+                </div>
+                <!-- Add more blog post cards here as needed -->
+                 <!-- Existing posts from manifest would go here if generated dynamically -->
+            </div>
+        </main>
+
+        <footer id="main-footer">
+             <!-- Footer will be loaded by JS -->
+              <div class="loading-indicator">Loading footer...</div>
+        </footer>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+     <script>
+        // Basic theme handling + year (copied from static pages)
+        const themeToggle = document.getElementById('theme-toggle'); // Will be loaded into header
+        const currentYearSpan = document.getElementById('current-year'); // Will be loaded into footer
+
+        function applyStaticTheme() {
+            const savedTheme = localStorage.getItem('theme');
+            const isDark = savedTheme === 'dark';
+            document.body.classList.toggle('dark-mode', isDark);
+            document.body.classList.toggle('light-mode', !isDark);
+             // Update toggle button text after header loads
+        }
+        function toggleStaticTheme() {
+            document.body.classList.toggle('dark-mode');
+            document.body.classList.toggle('light-mode');
+            const isDarkMode = document.body.classList.contains('dark-mode');
+             if (document.getElementById('theme-toggle')) { // Check if loaded
+                 document.getElementById('theme-toggle').textContent = isDarkMode ? '☀️' : '🌙';
+            }
+            localStorage.setItem('theme', isDarkMode ? 'dark' : 'light');
+        }
+
+        // Function to load includes
+        async function loadIncludes() {
+            try {
+                const headerRes = await fetch('/includes/header.html');
+                const headerEl = document.getElementById('main-header');
+                if (headerRes.ok && headerEl) {
+                    headerEl.innerHTML = await headerRes.text();
+                    // Re-select theme toggle after header load
+                    const loadedThemeToggle = document.getElementById('theme-toggle');
+                    if (loadedThemeToggle) {
+                        loadedThemeToggle.textContent = document.body.classList.contains('dark-mode') ? '☀️' : '🌙';
+                        loadedThemeToggle.addEventListener('click', toggleStaticTheme);
+                    }
+                     // Set active nav link after header load
+                     setActiveNavLink();
+                } else if(headerEl) {
+                     headerEl.innerHTML = '<p class="error-indicator">Error loading header.</p>';
+                }
+
+                const footerRes = await fetch('/includes/footer.html');
+                 const footerEl = document.getElementById('main-footer');
+                if (footerRes.ok && footerEl) {
+                    footerEl.innerHTML = await footerRes.text();
+                     const loadedYearSpan = document.getElementById('current-year');
+                     if(loadedYearSpan) loadedYearSpan.textContent = new Date().getFullYear();
+                } else if (footerEl) {
+                     footerEl.innerHTML = '<p class="error-indicator">Error loading footer.</p>';
+                }
+            } catch (err) {
+                console.error("Error loading includes:", err);
+                 const headerEl = document.getElementById('main-header');
+                 const footerEl = document.getElementById('main-footer');
+                 if(headerEl) headerEl.innerHTML = '<p class="error-indicator">Error loading header.</p>';
+                 if(footerEl) footerEl.innerHTML = '<p class="error-indicator">Error loading footer.</p>';
+            }
+        }
+
+         // Set Active Nav Link Function
+         function setActiveNavLink() {
+            const currentPath = window.location.pathname;
+            const navLinks = document.querySelectorAll('#main-header .main-nav a'); // Scope to header
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                // Highlight 'Blog' link if on blog index or specific blog post pages
+                const blogLinkHref = '/blog.html';
+                 const isBlogPage = currentPath === blogLinkHref || currentPath === '/sleep-cycle-calculator.html'; // Add other blog post paths here if needed
+
+                if (link.getAttribute('href') === currentPath) {
+                    link.classList.add('active');
+                } else if (link.getAttribute('href') === blogLinkHref && isBlogPage) {
+                     link.classList.add('active'); // Highlight Blog link on blog pages
+                }
+            });
+             // Ensure home link is active only on the root page
+             if (currentPath !== '/') {
+                 const homeLink = document.querySelector('#main-header .main-nav a[href="/"]');
+                 if (homeLink) homeLink.classList.remove('active');
+             } else {
+                  const homeLink = document.querySelector('#main-header .main-nav a[href="/"]');
+                 if (homeLink) homeLink.classList.add('active');
+             }
+        }
+
+        applyStaticTheme(); // Apply theme immediately
+        loadIncludes(); // Load header/footer after DOM is ready
+    </script>
+</body>
+</html>

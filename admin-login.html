@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+      <html lang="en">
+      <head>
+          <meta charset="UTF-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0">
+          <title>Admin Login - Sleep Calculator</title>
+          <link rel="stylesheet" href="/style.css"> <!-- Reuse main styles -->
+          <style>
+              body {
+                  display: flex;
+                  justify-content: center;
+                  align-items: center;
+                  min-height: 100vh;
+                  padding: 1rem;
+                  box-sizing: border-box;
+              }
+              .login-container {
+                  max-width: 400px;
+                  width: 100%;
+                  padding: 2rem 2.5rem;
+                  border-radius: var(--border-radius);
+                  background-color: var(--card-bg-light);
+                  box-shadow: var(--shadow-light);
+                  position: relative; /* For theme toggle positioning */
+              }
+              body.dark-mode .login-container {
+                  background-color: var(--card-bg-dark);
+                  box-shadow: var(--shadow-dark);
+              }
+              .login-container h1 {
+                  text-align: center;
+                  margin-top: 0;
+                  margin-bottom: 1.5rem;
+                  font-size: 1.8rem;
+                  color: var(--primary-color-light);
+              }
+              body.dark-mode .login-container h1 {
+                   color: var(--primary-color-dark);
+              }
+              .form-group { margin-bottom: 1.2rem; }
+              .form-group label {
+                  display: block;
+                  font-weight: 500;
+                  margin-bottom: 0.4rem;
+              }
+              .form-group input[type="email"],
+              .form-group input[type="password"] {
+                  width: 100%;
+                  padding: 0.7rem 0.9rem;
+                  border: 1px solid var(--input-border-light);
+                  border-radius: calc(var(--border-radius) / 2);
+                  font-size: 1rem;
+                  background-color: var(--input-bg-light);
+                  color: var(--text-color-light);
+                  box-sizing: border-box;
+                  transition: background-color var(--transition-speed), border-color var(--transition-speed), color var(--transition-speed);
+              }
+              body.dark-mode .form-group input[type="email"],
+              body.dark-mode .form-group input[type="password"] {
+                  background-color: var(--input-bg-dark);
+                  color: var(--text-color-dark);
+                  border-color: var(--input-border-dark);
+              }
+               .form-group input:focus {
+                  outline: none;
+                  border-color: var(--primary-color-light);
+                  box-shadow: 0 0 0 2px rgba(106, 130, 251, 0.3);
+              }
+              body.dark-mode .form-group input:focus {
+                  border-color: var(--primary-color-dark);
+                  box-shadow: 0 0 0 2px rgba(90, 85, 226, 0.4);
+              }
+              .login-button { /* Use specific class */
+                  width: 100%;
+                  padding: 0.8rem 1.5rem; font-size: 1.1rem; font-weight: 600; color: white; border: none;
+                  border-radius: var(--border-radius); cursor: pointer; transition: transform 0.2s, box-shadow 0.2s;
+                  background: var(--gradient-light); box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); display: block; margin-top: 1.5rem;
+              }
+              body.dark-mode .login-button { background: var(--gradient-dark); box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3); }
+              .login-button:hover { transform: translateY(-2px); box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15); }
+              body.dark-mode .login-button:hover { box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4); }
+              .login-button:disabled {
+                  opacity: 0.6;
+                  cursor: not-allowed;
+                  transform: none;
+                  box-shadow: none;
+              }
+              #login-status {
+                  margin-top: 1rem; padding: 0.8rem; border-radius: calc(var(--border-radius) / 2); display: none;
+                  text-align: center; font-weight: 500;
+              }
+              #login-status.success { background-color: rgba(76, 175, 80, 0.1); color: #4CAF50; border: 1px solid rgba(76, 175, 80, 0.3); }
+              #login-status.error { background-color: rgba(244, 67, 54, 0.1); color: #f44336; border: 1px solid rgba(244, 67, 54, 0.3); }
+              body.dark-mode #login-status.success { color: #81C784; }
+              body.dark-mode #login-status.error { color: #E57373; }
+              #theme-toggle { /* Position theme toggle */
+                  position: absolute;
+                  top: 1rem;
+                  right: 1rem;
+                  background: none; border: none; font-size: 1.5rem; cursor: pointer; padding: 5px; border-radius: 50%;
+                  transition: background-color var(--transition-speed);
+              }
+              #theme-toggle:hover { background-color: rgba(128, 128, 128, 0.1); }
+              .back-link {
+                  display: block;
+                  text-align: center;
+                  margin-top: 1.5rem;
+                  font-size: 0.9rem;
+                  color: var(--primary-color-light);
+                  text-decoration: none;
+              }
+              body.dark-mode .back-link {
+                  color: var(--accent-color-dark);
+              }
+              .back-link:hover {
+                  text-decoration: underline;
+              }
+          </style>
+      </head>
+      <body class="light-mode"> <!-- Start with light mode, JS can toggle -->
+          <div class="login-container">
+              <button id="theme-toggle" aria-label="Toggle light/dark mode">🌙</button>
+              <h1>Admin Login</h1>
+              <form id="admin-login-form">
+                  <div class="form-group">
+                      <label for="email">Email</label>
+                      <input type="email" id="email" name="email" required autocomplete="email">
+                  </div>
+                  <div class="form-group">
+                      <label for="password">Password</label>
+                      <input type="password" id="password" name="password" required autocomplete="current-password">
+                  </div>
+                  <button type="submit" class="login-button" id="login-button">Login</button>
+                  <div id="login-status"></div>
+              </form>
+              <a href="/" class="back-link">← Back to Home</a>
+          </div>
+
+          <script type="module" src="/admin-login.js"></script>
+      </body>
+      </html>
